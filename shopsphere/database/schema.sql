@@ -1,14 +1,3 @@
--- =====================================================================
--- ShopSphere Full-Stack E-Commerce Platform
--- MySQL Schema (Raw SQL — no ORM)
--- =====================================================================
--- Notes:
---   - InnoDB engine everywhere (FK support, transactions)
---   - utf8mb4 for full unicode (Bangla text, emoji, etc.)
---   - Timestamps: created_at / updated_at pattern
---   - Soft-delete pattern used on products (is_deleted) per spec (7.1)
--- =====================================================================
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
