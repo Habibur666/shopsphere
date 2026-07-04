@@ -72,7 +72,7 @@ export default function AdminBanners() {
         {banners.map((b) => (
           <div key={b.id} className="rounded-2xl border border-black/10 bg-white p-3">
             <div className="aspect-video overflow-hidden rounded-xl bg-brand-50">
-              <img src={`/media/bannerImages/${b.image_path}`} alt={b.title} className="h-full w-full object-cover" />
+              <img src={b.image_path} alt={b.title} className="h-full w-full object-cover" />
             </div>
             <p className="mt-2 text-sm font-medium">{b.title || "(untitled)"}</p>
             <p className="text-xs capitalize text-ink-900/50">{b.type}</p>

@@ -34,7 +34,7 @@ export default function Cart() {
               <div key={item.id} className="flex items-center gap-4 rounded-2xl border border-black/10 p-4">
                 <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-brand-50">
                   {item.thumbnail && (
-                    <img src={`/media/productThumbnail/${item.thumbnail}`} alt={item.name} className="h-full w-full object-cover" />
+                    <img src={item.thumbnail} alt={item.name} className="h-full w-full object-cover" />
                   )}
                 </div>
                 <div className="flex-1">

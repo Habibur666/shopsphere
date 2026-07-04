@@ -25,7 +25,7 @@ export default function ProductCard({ product }) {
       <div className="relative aspect-square overflow-hidden bg-brand-50">
         {product.thumbnail ? (
           <img
-            src={`/media/productThumbnail/${product.thumbnail}`}
+            src={product.thumbnail}
             alt={product.name}
             className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
           />

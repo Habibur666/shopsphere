@@ -58,7 +58,7 @@ CREATE TABLE users (
     phone             VARCHAR(20)  NULL,
     gender            ENUM('male','female','other') NULL,
     date_of_birth     DATE NULL,
-    profile_img       VARCHAR(255) NULL,                 -- filename only, folder = userProfImg
+    profile_img       VARCHAR(500) NULL,                 -- Cloudinary secure URL
     address_line      VARCHAR(255) NULL,                 -- single address, per spec
     city              VARCHAR(100) NULL,
     state             VARCHAR(100) NULL,
@@ -96,7 +96,7 @@ CREATE TABLE categories (
     id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     parent_id     INT UNSIGNED NULL,                 -- NULL = top-level category
     name          VARCHAR(150) NOT NULL,
-    image         VARCHAR(255) NULL,                 -- folder = categoryImages
+    image         VARCHAR(500) NULL,                 -- Cloudinary secure URL
     is_active     TINYINT(1) NOT NULL DEFAULT 1,
     created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -107,7 +107,7 @@ CREATE TABLE categories (
 CREATE TABLE brands (
     id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name          VARCHAR(150) NOT NULL UNIQUE,
-    logo          VARCHAR(255) NULL,                 -- folder = brandLogo
+    logo          VARCHAR(500) NULL,                 -- Cloudinary secure URL
     description   TEXT NULL,
     is_active     TINYINT(1) NOT NULL DEFAULT 1,
     created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -126,7 +126,7 @@ CREATE TABLE products (
     name                VARCHAR(255) NOT NULL,
     short_description   VARCHAR(500) NULL,
     full_description    TEXT NULL,
-    thumbnail           VARCHAR(255) NULL,           -- folder = productThumbnail
+    thumbnail           VARCHAR(500) NULL,           -- Cloudinary secure URL
     price               DECIMAL(12,2) NOT NULL,
     discount            DECIMAL(5,2) NOT NULL DEFAULT 0,     -- percentage
     offer_price         DECIMAL(12,2) NULL,
@@ -160,7 +160,7 @@ CREATE TABLE products (
 CREATE TABLE product_images (
     id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     product_id    INT UNSIGNED NOT NULL,
-    image_path    VARCHAR(255) NOT NULL,             -- folder = productImages
+    image_path    VARCHAR(500) NOT NULL,             -- Cloudinary secure URL
     sort_order    INT NOT NULL DEFAULT 0,
     created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_pimages_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
@@ -327,7 +327,7 @@ CREATE TABLE reviews (
 CREATE TABLE review_images (
     id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     review_id     INT UNSIGNED NOT NULL,
-    image_path    VARCHAR(255) NOT NULL,             -- folder = reviewImages
+    image_path    VARCHAR(500) NOT NULL,             -- Cloudinary secure URL
     created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_reviewimages_review FOREIGN KEY (review_id) REFERENCES reviews(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -340,7 +340,7 @@ CREATE TABLE banners (
     id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     type          ENUM('homepage','offer','carousel') NOT NULL DEFAULT 'homepage',
     title         VARCHAR(200) NULL,
-    image_path    VARCHAR(255) NOT NULL,             -- folder = bannerImages
+    image_path    VARCHAR(500) NOT NULL,             -- Cloudinary secure URL
     link_url      VARCHAR(255) NULL,
     sort_order    INT NOT NULL DEFAULT 0,
     is_active     TINYINT(1) NOT NULL DEFAULT 1,

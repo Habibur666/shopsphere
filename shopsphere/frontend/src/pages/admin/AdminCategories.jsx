@@ -72,7 +72,7 @@ export default function AdminCategories() {
         {flat.map((c) => (
           <div key={c.id} className="rounded-2xl border border-black/10 bg-white p-4">
             <div className="mb-2 h-16 w-16 overflow-hidden rounded-xl bg-brand-50">
-              {c.image && <img src={`/media/categoryImages/${c.image}`} alt="" className="h-full w-full object-cover" />}
+              {c.image && <img src={c.image} alt="" className="h-full w-full object-cover" />}
             </div>
             <p className="text-sm font-medium">{"—".repeat(c.depth)} {c.name}</p>
             <button onClick={() => remove(c.id)} className="mt-2 text-red-500 hover:text-red-600"><Trash2 size={14} /></button>

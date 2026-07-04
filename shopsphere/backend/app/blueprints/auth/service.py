@@ -50,18 +50,12 @@ def _issue_and_send_otp(user_id, email, purpose="email_verification"):
            VALUES (%s, %s, %s, %s)""",
         (user_id, otp_code, purpose, expires_at),
     )
-    # try:
-    #     send_otp_email(email, otp_code, purpose)
-    # except Exception:
-    #     # Do not block registration if mail sending fails in dev; log server-side.
-    #     current_app.logger.warning("Failed to send OTP email to %s", email)
-    # return otp_code
-
     try:
         send_otp_email(email, otp_code, purpose)
-    except Exception as e:
-        current_app.logger.warning("Failed to send OTP email to %s: %s", email, str(e))
-        print("MAIL ERROR:", repr(e))
+    except Exception:
+        # Do not block registration if mail sending fails in dev; log server-side.
+        current_app.logger.warning("Failed to send OTP email to %s", email)
+    return otp_code
 
 
 def resend_otp(email, purpose="email_verification"):

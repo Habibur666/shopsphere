@@ -62,7 +62,7 @@ export default function Profile() {
       <div className="mb-8 flex items-center gap-5">
         <div className="h-20 w-20 overflow-hidden rounded-full bg-brand-50">
           {profile.profile_img && (
-            <img src={`/media/userProfImg/${profile.profile_img}`} alt="" className="h-full w-full object-cover" />
+            <img src={profile.profile_img} alt="" className="h-full w-full object-cover" />
           )}
         </div>
         <label className="cursor-pointer rounded-full border border-black/10 px-4 py-2 text-sm hover:bg-black/5">

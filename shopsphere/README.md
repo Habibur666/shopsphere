@@ -45,13 +45,13 @@ copy .env.example .env       # Windows: copy, macOS/Linux: cp
 Edit `.env`:
 - Set `DB_PASSWORD` to your MySQL password.
 - Set `MAIL_USERNAME` / `MAIL_PASSWORD` to a real SMTP account (e.g. a Gmail App
-  Password) so OTP emails actually send. Without this, registration still works
-  but the OTP email silently fails to send (check server logs / the DB `user_otp`
-  table for the code during development).
-- Confirm `IMAGE_UPLOAD_ROOT=D:\eComImg` matches your machine. The folder and all
-  its subfolders (`userProfImg`, `productThumbnail`, `productImages`,
-  `categoryImages`, `brandLogo`, `bannerImages`, `reviewImages`) are created
-  automatically on first upload — you don't need to create them by hand.
+  Password) so OTP emails actually send.
+- Set `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` —
+  get these free from https://cloudinary.com/console (free tier is plenty for
+  development and small production use). All image uploads (product photos,
+  profile pictures, category/brand images, banners, review photos) go through
+  Cloudinary now — nothing is written to local disk, so this works the same
+  whether you're running locally or deployed to any server/host.
 
 Run the API:
 ```bash
@@ -68,8 +68,10 @@ cd frontend
 npm install
 npm run dev
 ```
-The storefront runs at `http://localhost:5173` and proxies `/api` and `/media`
-requests to the Flask backend automatically (see `vite.config.js`).
+The storefront runs at `http://localhost:5173` and proxies `/api` requests to
+the Flask backend automatically (see `vite.config.js`). Uploaded images are
+served directly from Cloudinary's CDN — the frontend just uses the URL
+returned by the API as-is.
 
 ---
 
@@ -88,9 +90,12 @@ requests to the Flask backend automatically (see `vite.config.js`).
 - **No ORM anywhere.** Every database call in `backend/app/blueprints/**` and
   `backend/app/utils/db.py` is a raw, parameterized SQL query executed through a
   `mysql-connector-python` connection pool.
-- **Image uploads** always go through `backend/app/utils/file_upload.py`, which
-  enforces one dedicated subfolder per image type under `IMAGE_UPLOAD_ROOT` and
-  auto-creates folders that don't exist yet.
+- **Image uploads** go through `backend/app/utils/file_upload.py`, which
+  uploads to Cloudinary (one dedicated Cloudinary folder per image type,
+  mirroring the original per-type folder structure) and stores the returned
+  secure CDN URL directly in the database. The frontend uses that URL as-is
+  for `<img src>` — no local file serving route is needed, and this works
+  identically whether the app runs on your laptop or on a production server.
 - **Auth** is JWT (access + refresh) via `flask-jwt-extended`, with **OTP-based**
   (not link-based) email verification. There is intentionally **no forgot/reset
   password flow** — users must know their current password to change it.

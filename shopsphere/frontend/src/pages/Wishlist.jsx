@@ -28,7 +28,7 @@ export default function Wishlist() {
               <Link to={`/products/${item.product_id}`}>
                 <div className="aspect-square overflow-hidden rounded-xl bg-brand-50">
                   {item.thumbnail && (
-                    <img src={`/media/productThumbnail/${item.thumbnail}`} alt={item.name} className="h-full w-full object-cover" />
+                    <img src={item.thumbnail} alt={item.name} className="h-full w-full object-cover" />
                   )}
                 </div>
                 <p className="mt-2 line-clamp-1 text-sm font-medium">{item.name}</p>

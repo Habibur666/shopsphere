@@ -42,7 +42,7 @@ export default function Home() {
           </div>
           {hero?.image_path && (
             <img
-              src={`/media/bannerImages/${hero.image_path}`}
+              src={hero.image_path}
               alt={hero.title || "Banner"}
               className="w-full rounded-2xl object-cover shadow-2xl"
             />
@@ -63,7 +63,7 @@ export default function Home() {
               >
                 <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-brand-50">
                   {c.image ? (
-                    <img src={`/media/categoryImages/${c.image}`} alt={c.name} className="h-full w-full object-cover" />
+                    <img src={c.image} alt={c.name} className="h-full w-full object-cover" />
                   ) : (
                     <span className="text-brand-500 font-display text-lg">{c.name[0]}</span>
                   )}

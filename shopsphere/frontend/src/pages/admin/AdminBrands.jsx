@@ -61,7 +61,7 @@ export default function AdminBrands() {
         {brands.map((b) => (
           <div key={b.id} className="rounded-2xl border border-black/10 bg-white p-4">
             <div className="mb-2 h-16 w-16 overflow-hidden rounded-xl bg-brand-50">
-              {b.logo && <img src={`/media/brandLogo/${b.logo}`} alt="" className="h-full w-full object-cover" />}
+              {b.logo && <img src={b.logo} alt="" className="h-full w-full object-cover" />}
             </div>
             <p className="text-sm font-medium">{b.name}</p>
             <button onClick={() => remove(b.id)} className="mt-2 text-red-500 hover:text-red-600"><Trash2 size={14} /></button>

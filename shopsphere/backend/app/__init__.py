@@ -1,8 +1,7 @@
-import os
 import traceback
-from flask import Flask, send_from_directory
+from flask import Flask
 from app.config import Config
-from app.extensions import jwt, mail, cors, limiter
+from app.extensions import jwt, mail, cors, limiter, init_cloudinary
 from app.utils import db as db_utils
 from app.utils.response import error
 
@@ -17,6 +16,7 @@ def create_app():
     mail.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": app.config["FRONTEND_ORIGIN"]}})
     limiter.init_app(app)
+    init_cloudinary(app)
 
     # --- Blueprints ---
     from app.blueprints.auth.routes import auth_bp
@@ -49,16 +49,9 @@ def create_app():
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
     app.register_blueprint(search_bp, url_prefix="/api/search")
 
-    # --- Static file route to SERVE uploaded images ---
-    @app.route("/media/<folder_name>/<filename>")
-    def serve_media(folder_name, filename):
-        valid_folders = set(app.config["IMAGE_SUBFOLDERS"].values())
-        if folder_name not in valid_folders:
-            return error("Unknown image type", 404)
-        folder = os.path.join(app.config["IMAGE_UPLOAD_ROOT"], folder_name)
-        return send_from_directory(folder, filename)
-
     # --- Global error handlers ---
+    # (Image serving no longer needed here — Cloudinary serves uploaded
+    #  images directly via its own CDN URLs, which are stored in full in the DB.)
     @app.errorhandler(404)
     def not_found(e):
         return error("Resource not found", 404)

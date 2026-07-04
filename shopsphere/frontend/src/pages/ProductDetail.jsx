@@ -68,7 +68,7 @@ export default function ProductDetail() {
           <div className="aspect-square overflow-hidden rounded-2xl bg-brand-50">
             {activeImage && (
               <img
-                src={`/media/${gallery[0].image_path === activeImage ? "productThumbnail" : "productImages"}/${activeImage}`}
+                src={activeImage}
                 alt={product.name}
                 className="h-full w-full object-cover"
               />
@@ -84,7 +84,7 @@ export default function ProductDetail() {
                 }`}
               >
                 <img
-                  src={`/media/${i === 0 ? "productThumbnail" : "productImages"}/${g.image_path}`}
+                  src={g.image_path}
                   alt=""
                   className="h-full w-full object-cover"
                 />

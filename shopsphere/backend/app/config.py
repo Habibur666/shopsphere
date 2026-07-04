@@ -35,8 +35,13 @@ class Config:
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
     OTP_EXPIRY_MINUTES = 10
 
-    # --- Image Upload Root (strict, per spec Section 8) ---
-    IMAGE_UPLOAD_ROOT = os.getenv("IMAGE_UPLOAD_ROOT", r"D:\eComImg")
+    # --- Image Upload (Cloudinary) ---
+    CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
+    CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")
+    CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET")
+
+    # Each image "type" maps to its own Cloudinary folder (mirrors the original
+    # local-disk folder-per-type structure, just hosted on Cloudinary instead).
     IMAGE_SUBFOLDERS = {
         "user_profile": "userProfImg",
         "product_thumbnail": "productThumbnail",
